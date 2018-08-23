@@ -1,0 +1,332 @@
+body{
+  font-family: Ebrima;
+  width: 100%; height: 100%;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  z-index: 0;
+  color: palegoldenrod;
+  background-repeat: no-repeat;
+  background-position: top;
+  overflow: hidden;
+}
+
+*{
+  outline: none !important;
+}
+
+.newPageButton{
+  width: 125px; height: 25px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border: 0;
+  color: white;
+  background: linear-gradient(to top, rgba(255, 249, 180, 0.25), rgba(255, 245, 117, 0.15));
+}
+
+.newPageButton:hover {
+  cursor: pointer;
+}
+
+.flexCol{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.timeBlock{
+  width: 150px; height: 50px;
+  padding: 0.5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.head1{
+  font-size: 1.6rem;
+}
+
+.timeBlock:hover{
+  background: rgba(0, 0, 0, 0.50);
+  box-shadow: 0 5px 5px rgba(132, 126, 91, 0.5);
+  transition: 0.1s;
+  cursor: pointer;
+}
+
+.timeBlock:active{
+  background-color: rgba(0, 0, 0, 0.89);
+  box-shadow: 0 2px 2px rgba(132, 126, 91, 0.72);
+}
+
+.timeListBox{
+  display: flex;
+  justify-content: space-around;
+  margin: 5%;
+  align-items: center;
+}
+
+.bgMorning{
+  background: url("https://b.radikal.ru/b39/1807/cb/e325b2dbd962.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.bgDay{
+  background: url("https://a.radikal.ru/a22/1807/5e/69aa477c3e82.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.bgEvening{
+  background: url("https://d.radikal.ru/d12/1807/2c/70014df74329.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.bgNight{
+  background-image: url("https://d.radikal.ru/d33/1807/a0/7c8625f6cc98.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.cityBg{
+  background-image: url("src/city.jpg");
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
+
+.allDaysBox{
+  color: black;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.dayBlock{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.49);
+  color: white;
+  width: 15%;
+  border-radius: 10px;
+}
+
+.newPageButtonBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1% 3%;
+}
+
+.homeButton{
+  background-color: white;
+  font-family: Ebrima;
+  width: 125px;
+}
+
+html{
+  padding: 0;
+  margin: 0;
+}
+
+.head1{
+  text-align: center;
+}
+.head2{
+  text-align: center;
+}
+
+.header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.listBox{
+  display: flex;
+  flex-direction: column;
+}
+
+.clear{
+  display: none;
+}
+.cityList{
+  width: 125px;
+  margin: 1% 3%;
+}
+
+.main{
+  display: flex;
+  width: 50%;
+  flex-direction: row;
+  position: relative;
+  margin: 0 auto;
+  align-items: center;
+  height: 400px;
+  justify-content: center;
+}
+.weatherBox{
+  display: flex;
+  justify-content: center;
+  width: 60%; height: 100%;
+  z-index: 1;
+  align-items: center;
+}
+.weatherBlock{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+  width: 100%; height: 100%;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.50);
+  box-shadow: 0 5px 5px rgba(132, 126, 91, 0.5);
+}
+.string{
+  text-align: center;
+}
+
+.pickerBox{
+  padding: 1% 3%;
+}
+
+.datepicker{
+  width: 125px;
+}
+.errorBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+  width: 100%; height: 100%;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.50);
+  box-shadow: 0 5px 5px rgba(132, 126, 91, 0.5);
+
+}
+.changeCityButton{
+  width: 100px;
+}
+.citySpan{
+  width: 100px;
+}
+
+.arrowBox{
+  display: flex;
+  height: 90%; width: 20%;
+  justify-content: center;
+  align-items: center;
+}
+
+.left{
+  perspective: 200px;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  cursor: default;
+}
+
+.right{
+  perspective: 200px;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  cursor: default;
+}
+
+::selection {
+  background: transparent;
+}
+::-moz-selection {
+  background: transparent;
+}
+:hover{
+  cursor: default;
+}
+
+.left:before {
+  display: flex;
+  transform: rotateY(-40deg);
+  transform-origin: 50% 100%;
+  border-radius:  10px 0 0 10px;
+  height: 75%;
+  width: 100%;
+  content: '';
+  overflow: hidden;
+  position: absolute;
+}
+.right:before {
+  display: flex;
+  transform: rotateY(40deg);
+  transform-origin: 50% 100%;
+  border-radius: 0 10px 10px  0;
+  height: 75%;
+  width: 100%;
+  position: absolute;
+  content: '';
+  overflow: hidden;
+
+}
+
+.bgNight .left:hover:before{
+  background: rgba(132, 126, 91, 0.5);
+  background: linear-gradient(to left, rgba(204, 198, 140, 0.25), rgba(94, 88, 64, 0.11));
+  transition: 0.5s;
+}
+.bgNight .right:hover:before{
+  background: rgba(132, 126, 91, 0.5);
+  background: linear-gradient(to right, rgba(204, 198, 140, 0.25), rgba(94, 88, 64, 0.11));
+  transition: 0.5s;
+}
+.right:hover:before{
+  background: rgba(132, 126, 91, 0.5);
+  background: linear-gradient(to right, rgba(25, 25, 24, 0.75), rgba(204, 198, 140, 0.25));
+  transition: 0.5s;
+  cursor: pointer;
+}
+.left:hover:before{
+  background: rgba(132, 126, 91, 0.5);
+  background: linear-gradient(to left, rgba(25, 25, 24, 0.75), rgba(204, 198, 140, 0.25));
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.loaderText{
+  font-size: 1.5rem;
+  text-shadow: black 0 0 2px;
+}
+
+.loader{
+  width: 100px; height: 100px;
+  background: linear-gradient(45deg, rgba(225, 219, 155, 0.51), rgba(0, 0, 0, 0), rgba(30, 30, 30, 0.5));
+  position: absolute;
+  animation: loader 0.5s infinite ease-in-out;
+  border-radius: 50px;
+}
+
+.btnBorder{
+  border: groove 5px rgba(225, 219, 155, 0.51);
+}
+
+@keyframes loader {
+  0%{transform: rotate(0deg);}
+  25%{transform: rotate(90deg);}
+  50%{transform: rotate(180deg);}
+  75%{transform: rotate(270deg);}
+  100%{transform: rotate(360deg);}
+}
