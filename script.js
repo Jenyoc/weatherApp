@@ -1,5 +1,5 @@
-window.onload = function () {
-  var changeCityButton = document.querySelector('.changeCityButton'),
+(()=> {
+  let changeCityButton = document.querySelector('.changeCityButton'),
     weatherBox = document.querySelector('.weatherBox'),
     arrowBackBox = document.querySelector('.back'),
     arrowForwardBox = document.querySelector('.forward'),
@@ -10,129 +10,23 @@ window.onload = function () {
     header = document.querySelector('.header'),
     cityList = document.querySelector('.cityList'),
     flexCol = document.querySelector('.flexCol'),
-    sources, check = 0,
+    sources, check = 0, pickerCheck = 0,
     cities = ['Minsk', 'Navapolatsk', 'Hrodna', 'Brest'],
     targetCity, citySpan, timeBlock, dayBlock, allDaysBox,
     weatherHours = [0, 1, 2, 3, 4, 5, 6, 7],
     weatherDate = 0, weatherRequest = new XMLHttpRequest();
 
-  function addCitiesToList() {
-    cities.forEach(function (city) {
-        citySpan = createElement('option', {text: city, value: city});
-        cityList.add(citySpan);
-      }
-    );
-  }
-
-  addCitiesToList();
-
-  function setEvent() {
-    if (check === 0) {
-      cityList.addEventListener('change', showWeather);
-    }
-    else {
-      cityList.addEventListener('change', newPageOpen);
-    }
-  }
-
-  setEvent();
-
-  var url = 'https:/api.openweathermap.org/data/2.5/forecast?q=Minsk,by&APPID=05b4798836b87272780eca72486a4dab';
-
-  weatherRequest.open('GET', url);
-  weatherRequest.send();
-  if (weatherRequest === undefined) {
-    targetCity = cityList.value;
-    weatherRequest.open('GET', url);
-    weatherRequest.send();
-  }
-  showLoadingAnimation();
-  weatherRequest.onload = function () {
-    weatherBox.innerHTML = '';
-    sources = JSON.parse(weatherRequest.response).list;
-    timelistBox.innerHTML = '';
-    weatherHours.forEach(function (item) {
-        timeBlock = createElement('span', {
-          id: weatherDate,
-          innerText: convertUTCDateToLocalDate(new Date(sources[weatherDate].dt_txt)).getHours() + ':00',
-          className: 'timeBlock btn' + item
-        });
-        timelistBox.appendChild(timeBlock);
-        timeBlock.addEventListener('click', setWeatherHour);
-        weatherDate++;
-      }
-    );
-    newPageButtonBox.innerHTML = '<button class="newPageButton">Go to full forecast</button>';
-    var newPageButton = document.querySelector('.newPageButton');
-    newPageButton.addEventListener('click', newPageOpen);
-    weatherDate = 0;
-    showWeather();
+  let createElement=(elemName, options, attributes)=> {
+    attributes = attributes || {};
+    let elem = document.createElement(elemName);
+    Object.assign(elem, options);
+    Object.keys(attributes).forEach((key)=> {
+      elem.setAttribute(key, attributes[key]);
+    });
+    return elem;
   };
 
-  function showDate() {
-    return parseInt(convertUTCDateToLocalDate(new Date(sources[weatherDate].dt_txt)).getDate());
-  }
-
-  function showPlusOrMinus() {
-
-    if (sources[weatherDate].main.temp < 273) {
-      return '-';
-    }
-
-    else if (sources[weatherDate].main.temp > 273) {
-      return '+';
-    }
-
-    else {
-      return '';
-    }
-  }
-
-  function showWeatherIcon() {
-    if (sources[weatherDate].weather[0].main = 'Clouds') {
-      return '<img src="https://png.icons8.com/metro/27/EEE8AA/clouds.png">';
-    }
-    else if (sources[weatherDate].weather[0].main = 'Rain') {
-      return '<img src="https://png.icons8.com/ios/27/EEE8AA/rain.png">'
-    }
-    else {
-      return '<img src="https://png.icons8.com/ios/27/EEE8AA/sun-filled.png">';
-    }
-  }
-
-  function showLoadingAnimation() {
-    weatherBox.innerHTML = '<div class="loader"></div><p class="loaderText">Loading</p>';
-  }
-
-  function showArrows() {
-    arrowBackBox.innerHTML = '<div class="arrow left">' + '<' + '</div>';
-    arrowForwardBox.innerHTML = '<div class="arrow right">' + '>' + '</div>';
-    var arrowBack = document.querySelector('.left'),
-      arrowForward = document.querySelector('.right');
-    arrowBack.addEventListener('click', clickBack);
-    arrowForward.addEventListener('click', clickForward);
-  }
-
-  function clearLeftArrow() {
-    arrowBackBox.innerHTML = '';
-  }
-
-  function clearRightArrow() {
-    arrowForwardBox.innerHTML = '';
-  }
-
-  function convertUTCDateToLocalDate(date) {
-    var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
-
-    var offset = date.getTimezoneOffset() / 60;
-    var hours = date.getHours();
-
-    newDate.setHours(hours - offset);
-
-    return newDate;
-  }
-
-  function showWeather(event) {
+  let showWeather=(event)=> {
     weatherBox.innerHTML = '';
     if (check === 0) {
       timeBlock.classList.remove('btnBorder');
@@ -165,7 +59,7 @@ window.onload = function () {
       targetCity = cityList.value;
     }
 
-    var url = 'https:/api.openweathermap.org/data/2.5/forecast?q=' + targetCity + ',by&APPID=05b4798836b87272780eca72486a4dab';
+    let url = 'https:/api.openweathermap.org/data/2.5/forecast?q=' + targetCity + ',by&APPID=05b4798836b87272780eca72486a4dab';
 
     weatherRequest.open('GET', url);
     weatherRequest.send();
@@ -175,15 +69,131 @@ window.onload = function () {
       weatherRequest.send();
     }
     showLoadingAnimation();
-    weatherRequest.onload = function () {
+    weatherRequest.onload = ()=> {
       weatherBox.innerHTML = '';
       sources = JSON.parse(weatherRequest.response).list;
       renderWeather();
     };
-  }
+  };
 
-  function renderWeather() {
-    var weatherBlock = createElement('div', {className: 'weatherBlock'});
+  let showLoadingAnimation=()=> {
+    weatherBox.innerHTML = '<div class="loader"></div><p class="loaderText">Loading</p>';
+  };
+
+  let addCitiesToList=()=> {
+    cities.forEach((city)=> {
+        citySpan = createElement('option', {text: city, value: city});
+        cityList.add(citySpan);
+      }
+    );
+  };
+
+  addCitiesToList();
+
+  let setEvent=()=> {
+    if (check === 0) {
+      cityList.addEventListener('change', showWeather);
+    }
+    else {
+      cityList.addEventListener('change', newPageOpen);
+    }
+  };
+
+  setEvent();
+
+  let url = 'https:/api.openweathermap.org/data/2.5/forecast?q=Minsk,by&APPID=05b4798836b87272780eca72486a4dab';
+
+  weatherRequest.open('GET', url);
+  weatherRequest.send();
+  if (weatherRequest === undefined) {
+    targetCity = cityList.value;
+    weatherRequest.open('GET', url);
+    weatherRequest.send();
+  }
+  showLoadingAnimation();
+  weatherRequest.onload = ()=> {
+    weatherBox.innerHTML = '';
+    sources = JSON.parse(weatherRequest.response).list;
+    timelistBox.innerHTML = '';
+    weatherHours.forEach((item)=> {
+        timeBlock = createElement('span', {
+          id: weatherDate,
+          innerText: convertUTCDateToLocalDate(new Date(sources[weatherDate].dt_txt)).getHours() + ':00',
+          className: 'timeBlock btn' + item
+        });
+        timelistBox.appendChild(timeBlock);
+        timeBlock.addEventListener('click', setWeatherHour);
+        weatherDate++;
+      }
+    );
+    newPageButtonBox.innerHTML = '<button class="newPageButton">Go to full forecast</button>';
+    let newPageButton = document.querySelector('.newPageButton');
+    newPageButton.addEventListener('click', newPageOpen);
+    weatherDate = 0;
+    showWeather();
+  };
+
+  let showDate=()=> {
+    return parseInt(convertUTCDateToLocalDate(new Date(sources[weatherDate].dt_txt)).getDate());
+  };
+
+  let showPlusOrMinus=()=> {
+
+    if (sources[weatherDate].main.temp < 273) {
+      return '-';
+    }
+
+    else if (sources[weatherDate].main.temp > 273) {
+      return '+';
+    }
+
+    else {
+      return '';
+    }
+  };
+
+  let showWeatherIcon=()=> {
+    if (sources[weatherDate].weather[0].main = 'Clouds') {
+      return '<img src="https://png.icons8.com/metro/27/EEE8AA/clouds.png">';
+    }
+    else if (sources[weatherDate].weather[0].main = 'Rain') {
+      return '<img src="https://png.icons8.com/ios/27/EEE8AA/rain.png">'
+    }
+    else {
+      return '<img src="https://png.icons8.com/ios/27/EEE8AA/sun-filled.png">';
+    }
+  };
+
+  let showArrows=()=> {
+    arrowBackBox.innerHTML = '<div class="arrow left">' + '<' + '</div>';
+    arrowForwardBox.innerHTML = '<div class="arrow right">' + '>' + '</div>';
+    let arrowBack = document.querySelector('.left'),
+      arrowForward = document.querySelector('.right');
+    arrowBack.addEventListener('click', clickBack);
+    arrowForward.addEventListener('click', clickForward);
+  };
+
+  let clearLeftArrow=()=> {
+    arrowBackBox.innerHTML = '';
+  };
+
+  let clearRightArrow=()=> {
+    arrowForwardBox.innerHTML = '';
+  };
+
+  let convertUTCDateToLocalDate=(date)=> {
+    let newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+
+    let offset = date.getTimezoneOffset() / 60;
+    let hours = date.getHours();
+
+    newDate.setHours(hours - offset);
+
+    return newDate;
+  };
+
+  let renderWeather=()=> {
+    let weatherBlock = createElement('div', {className: 'weatherBlock'});
     weatherBlock.innerHTML =
       '<h1 class="head1">' + cityList.value + '</h1>' +
       '<h2 class="head2">' +
@@ -196,19 +206,9 @@ window.onload = function () {
       showWeatherIcon() + '<p class="string">' + sources[weatherDate].weather[0].main + '</p>';
     weatherBox.appendChild(weatherBlock);
     showArrows();
-  }
+  };
 
-  function createElement(elemName, options, attributes) {
-    attributes = attributes || {};
-    var elem = document.createElement(elemName);
-    Object.assign(elem, options);
-    Object.keys(attributes).forEach(function (key) {
-      elem.setAttribute(key, attributes[key]);
-    });
-    return elem;
-  }
-
-  function setWeatherHour(event) {
+  let setWeatherHour=(event)=> {
     if (weatherDate >= 0 && weatherDate < 8) {
       weatherDate = parseInt(event.target.getAttribute('id'));
     }
@@ -230,13 +230,13 @@ window.onload = function () {
       weatherDate = 0;
     }
     showWeather();
-  }
+  };
 
-  function reload() {
+  let reload=()=> {
     window.location.reload();
-  }
+  };
 
-  function setWeatherDate() {
+  let setWeatherDate=()=> {
     weatherRequest.abort();
     clearRightArrow();
     clearLeftArrow();
@@ -252,13 +252,13 @@ window.onload = function () {
         '</h1>' +
         '<h2>' + '(NO DATA)' + '</h2>' + '</div>';
     }
-  }
+  };
 
-  function clickBack() {
+  let clickBack=()=> {
 
     weatherRequest.abort();
     clearLeftArrow();
-    var i = picker.dateSelected.getDate();
+    let i = picker.dateSelected.getDate();
     weatherDate = weatherDate - 8;
     if (weatherDate >= 0 && weatherDate <= 39) {
       i--;
@@ -275,12 +275,12 @@ window.onload = function () {
         '</h1>' +
         '<h2>' + '(NO DATA)' + '</h2>' + '</div>';
     }
-  }
+  };
 
-  function clickForward() {
+  let clickForward=()=> {
     weatherRequest.abort();
     clearRightArrow();
-    var i = picker.dateSelected.getDate();
+    let i = picker.dateSelected.getDate();
     weatherDate = weatherDate + 8;
     if (weatherDate <= 39 && weatherDate >= 0) {
       i++;
@@ -300,30 +300,33 @@ window.onload = function () {
         '</h1>' +
         '<h2>' + '(NO DATA)' + '</h2>' + '</div>';
     }
-  }
+  };
 
-  function newPageOpen(event) {
+  let newPageOpen=(event)=> {
     targetCity = cityList.value;
-    var url = 'https:/api.openweathermap.org/data/2.5/forecast?q=' + targetCity + ',by&APPID=05b4798836b87272780eca72486a4dab';
+    let url = 'https:/api.openweathermap.org/data/2.5/forecast?q=' + targetCity + ',by&APPID=05b4798836b87272780eca72486a4dab';
     weatherRequest.open('GET', url);
     weatherRequest.send();
 
     showLoadingAnimation();
 
-    weatherRequest.onload = function () {
+    weatherRequest.onload = () => {
       document.body.setAttribute('class', 'cityBg');
       timelistBox.innerHTML = '';
-      header.removeChild(pickerBox);
+      if(pickerCheck === 0) {
+        header.removeChild(pickerBox);
+        pickerCheck = 1;
+      }
       newPageButtonBox.innerHTML = '<button class="homeButton">HOME</button>';
-      var homeButton = document.querySelector('.homeButton');
+      let homeButton = document.querySelector('.homeButton');
       homeButton.addEventListener('click', reload);
       sources = JSON.parse(weatherRequest.response).list;
       check = 1;
       setEvent();
       flexCol.innerHTML = '<section class="allDaysBox"></section>';
-      var allDays = [0, 8, 16, 24, 32];
+      let allDays = [0, 8, 16, 24, 32];
       allDaysBox = document.querySelector('.allDaysBox');
-      allDays.forEach(function (day) {
+      allDays.forEach((day)=> {
         dayBlock = createElement('div', {className: 'dayBlock'});
         dayBlock.innerHTML =
           '<h1 class="head1">' + cityList.value + '</h1>' +
@@ -339,9 +342,9 @@ window.onload = function () {
       });
     };
     picker=undefined;
-  }
+  };
 
-  var day = new Date(),
+  let day = new Date(),
     hour = day.getHours();
 
   if (hour >= 5 && hour < 12) {
@@ -353,10 +356,10 @@ window.onload = function () {
   } else {
     document.body.setAttribute('class', 'bgNight');
   }
-  var picker = datepicker('.datepicker', {
+  let picker = datepicker('.datepicker', {
     dateSelected: new Date,
     position: 'br',
     onSelect: setWeatherDate,
     startDay: 1
   })
-};
+})();
